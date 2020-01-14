@@ -48,6 +48,8 @@ Pengukuran waktu dilakukan secara programatis menggunakan fungsi timing dari Ope
 ## Performance Measure
 Seberapa baik segmentasi berjalan? Kemarin diminta bisa mendapatkan metric seberapa baik hasil dari segmentasi. Untuk mendapatkan hasil tersebut, diperlukan sebuah test set external.
 
+Test set eksternal yang dipakai ukurannya cukup besar, butuh waktu untuk download dan parsingnya. Oleh karena itu sementara yang ditampilkan bagaimana melakukan performance measure dulu. Setelah wawancara hari rabu rencananya akan diupdate lagi.
+
 Secara naif bisa digunakan pixel-wise accuracy sebagai error. Akan tetapi pendekatan tersebut akan bermasalah ketika ada class imbalance di gambar. Misal rata-rata gambar didominasi oleh background. Dengan mengklasifikasi semua pixel sebagai background, akurasi tinggi bisa mudah dicapai. Pendekatan ini kurang baik karena sifatnya terlalu global.
 
 Umumnya, ada dua pendekatan yang dipakai untuk mengukur performa dari semantic segmentation:
@@ -64,9 +66,9 @@ Setelah mendapatkan besaran-besaran tersebut, IoU atau Jaccard Index bisa dihitu
 
 Sesuai namanya, Intersection Over Union, IoU juga bisa diformulasikan sebagai berikut :
 
-<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{\mid Pred \cap GT\mid}{\mid Pred \cup GT\mid - \mid Pred \cap GT\mid}">
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{\mid Pred \cap GT\mid}{\mid Pred \cup GT\mid}">
 
-2. F1 Score / Dice Coefficient
+1. F1 Score / Dice Coefficient
 
 Menggunakan definisi TP, FP, dan FN dari sebelumnya, F1 Score / Dice Coefficient bisa dihitung dengan menggunakan rumus
 
