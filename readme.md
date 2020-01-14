@@ -70,11 +70,11 @@ Sesuai namanya, Intersection Over Union, IoU juga bisa diformulasikan sebagai be
 
 Menggunakan definisi TP, FP, dan FN dari sebelumnya, F1 Score / Dice Coefficient bisa dihitung dengan menggunakan rumus
 
-<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times TP}{2 \times TP + FP + FN}">
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times TP}{2 \times TP %2b FP %2b FN}">
 
 Atau bisa juga diformulasikan sebagai
 
-<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times \mid Pred \cap GT \mid}{\mid Pred\mid + \mid GT\mid}">
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times \mid Pred \cap GT \mid}{\mid Pred\mid %2b \mid GT\mid}">
 
 **Perbedaan IoU dan F1 Score**
 
