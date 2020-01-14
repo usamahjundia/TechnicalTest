@@ -3,7 +3,7 @@
 ## Program sederhana untuk tes teknikal.
 1. Haar cascade digunakan untuk mendapatkan head-shoulders pada suatu gambar. Karena penggunaan metode ini, terbatas hanya untuk wajah frontal saja dengan sedikit toleransi kemiringan. Digunakan implementasi Haar Cascade dari opencv.
 2. Region yang tedeteksi oleh haar cascade di-crop, lalu gambar hasil crop tersebut dijadikan input kedalam model segmentasi.
-3. Segmentasi dilakukan menggunakan pendekatan berbasis deep learning. Model yang digunakan adalah [BiSeNet](https://arxiv.org/abs/1808.00897) yang diimplementasi dalam framework Keras oleh pengguna github [Shaoanlu](https://github.com/shaoanlu/face_toolbox_keras).
+3. Segmentasi dilakukan menggunakan pendekatan berbasis deep learning. Model yang digunakan adalah [BiSeNet](https://arxiv.org/abs/1808.00897) yang diimplementasi dalam framework Keras oleh pengguna github [Shaoanlu](https://github.com/shaoanlu/face_toolbox_keras). Segmentasi yang dilakukan adalah semantic segmentation, yang berarti semua kelas dalam 1 gambar tidak dibedakan seperti instance segmentation.
 4. Hasil segmentasi kemudian ditampilkan.
 
 **Usage**
@@ -44,10 +44,48 @@ Pengukuran waktu dilakukan secara programatis menggunakan fungsi timing dari Ope
 - Avg : 0.07437452360070528 seconds
 - Stdev : 0.007538762860430644 seconds
 - Spanning 0.06672890414031146 to 0.13456677795261807 seconds
+  
+## Performance Measure
+Seberapa baik segmentasi berjalan? Kemarin diminta bisa mendapatkan metric seberapa baik hasil dari segmentasi. Untuk mendapatkan hasil tersebut, diperlukan sebuah test set external.
+
+Secara naif bisa digunakan pixel-wise accuracy sebagai error. Akan tetapi pendekatan tersebut akan bermasalah ketika ada class imbalance di gambar. Misal rata-rata gambar didominasi oleh background. Dengan mengklasifikasi semua pixel sebagai background, akurasi tinggi bisa mudah dicapai. Pendekatan ini kurang baik karena sifatnya terlalu global.
+
+Umumnya, ada dua pendekatan yang dipakai untuk mengukur performa dari semantic segmentation:
+1. IoU / Jaccard Index
+
+Pendekatan ini dilakukan untuk setiap kelas dan nantinya IoU / Jaccard Index dihitung untuk setiap kelas dan diambil reratanya. Dalam menghitung Jaccard Index, dihitung beberapa besaran terlebih dahulu, yakni True Positive (TP), False Positive(FP) dan False Negative(FN). Tiap-tiap pixel disini mengacu pada pixel yang menyimpan nilai 1 pada mask yang melingkupi objek.
+- True Positive adalah tiap tiap pixel yang berada pada posisi sama di Label / Ground Truth (GT) dan pixel hasil prediksi. Dengan kata lain, interseksi antara Prediksi dan GT.
+- False Positive adalah pixel yang ada pada prediksi, namun tidak memiliki interseksi dengan GT.
+- False Negative adalah kebalikan dari FP, yakni pixel yang ada pada GT tetapi tidak muncul pada prediksi.
+
+Setelah mendapatkan besaran-besaran tersebut, IoU atau Jaccard Index bisa dihitung dengan rumus
+
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{TP}{TP + FP + FN}">
+
+Sesuai namanya, Intersection Over Union, IoU juga bisa diformulasikan sebagai berikut :
+
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{\mid Pred \cap GT\mid}{\mid Pred \cup GT\mid - \mid Pred \cap GT\mid}">
+
+2. F1 Score / Dice Coefficient
+
+Menggunakan definisi TP, FP, dan FN dari sebelumnya, F1 Score / Dice Coefficient bisa dihitung dengan menggunakan rumus
+
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times TP}{2 \times TP + FP + FN}">
+
+Atau bisa juga diformulasikan sebagai
+
+<img src="https://render.githubusercontent.com/render/math?math=IoU = \frac{2 \times \mid Pred \cap GT \mid}{\mid Pred\mid + \mid GT\mid}">
+
+**Perbedaan IoU dan F1 Score**
+
+Kedua metric diatas berkorelasi. Akan tetapi, bila digunakan untuk mengukur average performance dari banyak test set sekaligus, akan terlihat perbedaannya.
+
+Mirip seperti L1 dan L2 distance, IoU memberikan bobot lebih pada prediksi yang salah.
+
+Umumnya, average performance yang diukur dengan F1 score akan memberikan expected performance, dan average performance yang diukur dengan IoU akan memberikan worst case performance.
 
 ## Requirements
 (ada di requirements.txt)
-- dlib version 19.8.1(tidak terlalu perlu jika hanya menguji yang segmentasi)
 - matplotlib version 2.2.2
 - numpy version 1.16.4
 - opencv-contrib-python version 4.1.0.25
