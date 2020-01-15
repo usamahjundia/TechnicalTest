@@ -21,8 +21,10 @@ if __name__ == "__main__":
     fp = FaceParser('./bisenet/BiSeNet_keras.h5')
     showimg(source_image)
 
-    face_image = fd.detect_crop2x(source_image.copy())[0]
-    showimg(face_image)
+    face_image = fd.detect_crop2x(source_image.copy())
+    # semua wajah yang terdeteksi di gambar diloop dan dicari masknya masing-masing
+    for face in face_image:
+        showimg(face)
 
-    mask = fp.parse_one_face(face_image)
-    showimg(mask)
+        mask = fp.parse_one_face(face)
+        showimg(mask)

@@ -1,7 +1,7 @@
 # Head-shoulders segmentation
 
 ## Program sederhana untuk tes teknikal.
-1. Haar cascade digunakan untuk mendapatkan head-shoulders pada suatu gambar. Karena penggunaan metode ini, terbatas hanya untuk wajah frontal saja dengan sedikit toleransi kemiringan. Digunakan implementasi Haar Cascade dari opencv.
+1. Haar cascade digunakan untuk mendapatkan head-shoulders pada suatu gambar. Karena penggunaan metode ini, terbatas hanya untuk wajah frontal saja dengan sedikit toleransi kemiringan. Digunakan implementasi Haar Cascade dari opencv. Penggunaan haar cascade memungkinkan adanya multi deteksi atau bahkan false positif. Bisa ditanggulangi dengan menyesuaikan skala deteksi multiscale atau dengan menggunakan detector yang lebih baik, misal HOG + SVM. Keduanya belum dilakukan.
 2. Region yang tedeteksi oleh haar cascade di-crop, lalu gambar hasil crop tersebut dijadikan input kedalam model segmentasi.
 3. Segmentasi dilakukan menggunakan pendekatan berbasis deep learning. Model yang digunakan adalah [BiSeNet](https://arxiv.org/abs/1808.00897) yang diimplementasi dalam framework Keras oleh pengguna github [Shaoanlu](https://github.com/shaoanlu/face_toolbox_keras). Segmentasi yang dilakukan adalah semantic segmentation, yang berarti semua kelas dalam 1 gambar tidak dibedakan seperti instance segmentation.
 4. Hasil segmentasi kemudian ditampilkan.
