@@ -48,9 +48,7 @@ Pengukuran waktu dilakukan secara programatis menggunakan fungsi timing dari Ope
 ## Performance Measure
 Seberapa baik segmentasi berjalan? Kemarin diminta bisa mendapatkan metric seberapa baik hasil dari segmentasi. Untuk mendapatkan hasil tersebut, diperlukan sebuah test set external.
 
-Test set eksternal yang dipakai ukurannya cukup besar, butuh waktu untuk download dan parsingnya. Oleh karena itu sementara yang ditampilkan bagaimana melakukan performance measure dulu.
-
-Untuk melakukan evaluasi bisa menjalankan notebook Evaluasi Segmentasi.
+**Untuk melakukan evaluasi bisa menjalankan notebook Evaluasi Segmentasi.**
 
 Secara naif bisa digunakan pixel-wise accuracy sebagai error. Akan tetapi pendekatan tersebut akan bermasalah ketika ada class imbalance di gambar. Misal rata-rata gambar didominasi oleh background. Dengan mengklasifikasi semua pixel sebagai background, akurasi tinggi bisa mudah dicapai. Pendekatan ini kurang baik karena sifatnya terlalu global.
 
